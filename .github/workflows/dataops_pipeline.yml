@@ -3,32 +3,31 @@ name: DataOps Pipeline
 on:
   push:
     branches:
-      - main  # ou la branche sur laquelle tu veux que le workflow se déclenche
+      - tp-dataops
   pull_request:
     branches:
-      - main  # ou la branche de destination du pull request
+      - tp-dataops
 
 jobs:
-  run_dataops_pipeline:
+  build:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Vérification du code
-        uses: actions/checkout@v2  # Télécharge le code du repo
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Configurer Python
+      - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'  # spécifie la version de Python que tu veux
-
-      - name: Installer les dépendances
+          python-version: '3.x'
+        
+      - name: Install dependencies
         run: |
           python -m venv venv
           source venv/bin/activate
           pip install -r requirements.txt
 
-      - name: Exécuter le pipeline DataOps
+      - name: Run the DataOps pipeline
         run: |
-          source venv/bin/activate
-          python main.py  # Exécute ton script principal
+          python main.py
 
