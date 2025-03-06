@@ -19,7 +19,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.11'  # Spécifie Python 3.11
+          python-version: '3.11'
 
       - name: Upgrade pip
         run: |
@@ -31,6 +31,12 @@ jobs:
           source venv/bin/activate
           pip install -r requirements.txt
 
+      - name: Verify installation of dependencies
+        run: |
+          python -m pip show requests  # Vérifie si le module 'requests' est installé
+          pip freeze  # Affiche tous les modules installés
+
       - name: Run the DataOps pipeline
         run: |
           python main.py
+
